@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Amenities from '../components/Amenities';
-import SafetyFeatures from '../components/SafetyFeatures';
+
 import Meals from '../components/Meals';
 import { useState } from 'react';
 const blocks={
@@ -27,38 +26,59 @@ const boxes2={
     
 }
 
+  const amenities = [
+    'Clean Restrooms',
+    'Comfortable Sitting arrangement',
+    'Onboarding Dining',
+    'Wi-Fi Access',
+    'Entertainment System',
+    'Air Conditioning/Climate Control',
+  ];
+  const features = [
+    'Live food provided to all passengers',
+    'Emergency Kit onboard',
+    'Fire Extinguishers',
+    
+  ];
+
+
 const ManageBoats = () => {
   const [name, setName] = useState("");
   const [capacity, setCapacity] = useState("");
-  const [amenities, setAmenities] = useState([]);
-  const [features, setFeatures] = useState([]);
-  const [photos, setPhotos] = useState("");
+  const [amenities1, setAmenities] = useState([]);
+  const [features1, setFeatures] = useState([]);
+  const [image,setimage]=useState(null);
   const addamenity = (amenity) => {
     setAmenities((prevAmenities) => {
+     
       if (!prevAmenities.includes(amenity)) {
-       prevAmenities.push(amenity)
+        
+        return [...prevAmenities, amenity];
       }
-      return prevAmenities;
+      return prevAmenities; 
     });
   };
-
+  
 
   const addsafety = (feature) => {
-    setFeatures((prevFeatures) => {
-      if (!prevFeatures.includes(feature)) {
-        prevFeatures.push(feature)
+    setFeatures((prevAmenities) => {
+    
+      if (!prevAmenities.includes(feature)) {
+       
+        return [...prevAmenities, feature];
       }
-      return prevFeatures;
+      return prevAmenities; 
     });
   };
+  
   const handleSubmit=async()=>
   {
 
 
-    const formData={name,capacity,amenities,features,photos};
-console.log(amenities);
+    const formData={name,capacity,amenities1,features1,image};
+console.log(image);
     try{
-      const response=await fetch("http://localhost:5000/api/boats",
+      const response=await fetch("https://boat-backend-kkvcfs4wk-vertika-s-projects.vercel.app/",
         {
           method:'POST',
           headers:{  "Content-Type": "application/json", },
@@ -72,7 +92,7 @@ console.log(amenities);
         setName("");
         setCapacity("");
         setAmenities([]);
-        setPhotos('');
+      setimage(null);
         setFeatures([]);
         alert("Boat data added successfully!");
        
@@ -134,7 +154,10 @@ console.log(e);
               accept="image/*"  
               required
               style={boxes2}
-              onChange={(e)=>setPhotos(e.target.value)}
+             onChange={(e)=>{
+              console.log(e.target.files[0]);
+              setimage(e.target.files[0]);
+             }}
            
             />
           </div>
@@ -142,16 +165,54 @@ console.log(e);
       </section>
      
       <section>
-      <Amenities handleChange={addamenity} selected={amenities} />
+      <div style={{ padding: '10px' }}>
+      <div style={blocks}>Amenities</div>
+      <p style={{ color: 'gray' }}>
+        Select the amenities available on your boat to enhance passenger comfort and experience
+      </p>
+      {amenities.map((amenity)=>(
+          <div  style={{padding:'5px'}}>
+          <input
+            type="checkbox"
+            checked={
+           amenities1.includes(amenity)
+            }
+            onChange={() => addamenity(amenity)}
+            style={{ padding: '5px',
+              border:'2px solid #0796e8',
+              borderRadius:'4px'
+            }}
+          />
+         {amenity}
+        </div>))}
+        </div>
        
       </section>
       <section>
-      <SafetyFeatures handleChange={addsafety}  selected={features}/>
+      <div style={{padding:'10px'}}>
+        <div style={blocks}>Safety Features</div>
+        <p style={{ color: 'gray' }}>
+        Select the safety features available on your boat to enhance passenger safety
+        </p>
+        {features.map((feature)=>(
+          <div  style={{padding:'5px'}}>
+          <input
+            type="checkbox"
+            checked={
+           features1.includes(feature)
+            }
+            onChange={() =>addsafety(feature)}
+            style={{ padding: '5px',
+              border:'2px solid #0796e8',
+              borderRadius:'4px'
+            }}
+          />
+         {feature}
+        </div>))}
+        </div>
        
       </section>
-      <section>
-        <Meals/>
-      </section>
+      
       <div style={{padding:'10px'}}>
 <button 
 onClick={handleSubmit}

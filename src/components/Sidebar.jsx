@@ -9,7 +9,7 @@ const BarData=[
     },
     {
         title:'Manage Bookings',
-        link:'/Dashboard'
+        link:'/manage-bookings'
     },
     {
         title:'Manage Boats',
@@ -17,11 +17,11 @@ const BarData=[
     },
     {
         title:'Manage meals',
-        link:'/Dashboard'
+        link:'/manage-meals'
     },
     {
         title:'Manage pricing',
-        link:'/Dashboard'
+        link:'/manage-pricing'
     },
 
 ]
