@@ -78,7 +78,7 @@ const ManageBoats = () => {
     const formData={name,capacity,amenities1,features1,image};
 console.log(image);
     try{
-      const response=await fetch("https://boat-backend-kkvcfs4wk-vertika-s-projects.vercel.app/",
+      const response=await fetch("https://boat-backend-757qhf3c3-vertika-s-projects.vercel.app/",
         {
           method:'POST',
           headers:{  "Content-Type": "application/json", },
